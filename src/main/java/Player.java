@@ -1,12 +1,14 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * Player class to make move.
+ */
 public class Player implements PlayerInterface
 {
     private final String iName;
     private final char iPebble;
     private Scanner iScanner;
-    private int counter;
 
     public Player(final String name, final char pebble)
     {
@@ -15,6 +17,10 @@ public class Player implements PlayerInterface
         iScanner = new Scanner(System.in);
     }
 
+    /**
+     * @param gameState the current state of our game.
+     * @return the move with which row and column the pebble will be placed.
+     */
     public Move makeMove(final GameState gameState)
     {
         System.out.println(iName + "'s turn");
@@ -22,7 +28,7 @@ public class Player implements PlayerInterface
         final Board board = gameState.getBoard();
         int column = 0;
         int row = 0;
-        counter = 1;
+        int counter = 1;
 
         try
         {
@@ -34,6 +40,8 @@ public class Player implements PlayerInterface
             iScanner = new Scanner(System.in);
         }
 
+        // Determine which row to place pebble
+        //
         while (true)
         {
                 if (column > board.getBoardWidth() - 1)

@@ -1,29 +1,62 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+/**
+ * Class to control the game.
+ */
 public class Game
 {
-    private final Player iPlayerX;
-    private final Player iPlayerO;
-    private final Board iBoard;
+    private final GameState iGameState;
+    private Scanner iScanner;
+    private final ArrayList<Player> iPlayers;
 
-    public Game(final Player playerX, final Player playerO, final Board board)
+    public Game()
     {
-        iPlayerX = playerX;
-        iPlayerO = playerO;
-        iBoard = board;
+        iGameState = new GameState();
+        iScanner = new Scanner(System.in);
+        iPlayers = new ArrayList<Player>();
     }
 
-    public Player getPlayerX()
+    /**
+     * Method to set up game and run game loop.
+     */
+    public void createGame()
     {
-        return iPlayerX;
-    }
+        System.out.println("Please enter name for player one: ");
+        iPlayers.add(new Player(iScanner.next(), 'X'));
 
-    public Player getPlayerO()
-    {
-        return iPlayerO;
-    }
+        System.out.println("Please enter name for player two: ");
+        iPlayers.add(new Player(iScanner.next(), 'O'));
 
-    public Board getBoard()
-    {
-        return iBoard;
+        final Board board = new Board();
+        board.create();
+
+        iGameState.printBoard(board);
+
+        boolean running = true;
+
+        System.out.println("Choose column 0-5 to place pebble");
+
+        // Game loop
+        //
+        while (running)
+        {
+
+            for (final Player player : iPlayers)
+            {
+                final Move move = player.makeMove(iGameState);
+                iGameState.updateGame(move);
+
+                if (iGameState.getBoard().checkIfMoveWon(move))
+                {
+                    System.out.println(player.getName() + " wins!");
+                    running = false;
+                    break;
+                }
+            }
+        }
     }
 }
+
+
 
