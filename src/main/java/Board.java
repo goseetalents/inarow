@@ -81,44 +81,66 @@ public class Board
      */
     public boolean checkIfMoveWon(final Move move)
     {
+        boolean hasWon = false;
+
+        if (horizontalCheck(move) || verticalCheck(move) ||  diagonalCheck(move) || diagonalBackCheck(move))
+        {
+            hasWon = true;
+        }
+
+        return hasWon;
+    }
+
+    public boolean horizontalCheck(final Move move)
+    {
         final int row = move.getRow();
         final int column = move.getColumn();
         final char pebble = move.getPebble();
-
         int counter = 0;
         int checkColumn = column;
 
-        //Horizontal check.
-        while(checkColumn < iBoardWidth && iBoard[row][checkColumn] == pebble)
+        while (checkColumn < iBoardWidth && iBoard[row][checkColumn] == pebble)
         {
             counter++;
             checkColumn++;
         }
         checkColumn = column - 1;
-        while(checkColumn >= 0 && iBoard[row][checkColumn] == pebble)
+        while (checkColumn >= 0 && iBoard[row][checkColumn] == pebble)
         {
             counter++;
             checkColumn--;
         }
-        if(counter == 4)
-            return true;
 
-        //Vertical check.
-        counter = 0;
+        return counter == 4;
+    }
+
+
+    public boolean verticalCheck(final Move move)
+    {
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
+        int counter = 0;
         int checkRow = row;
-        while(checkRow < iBoardHeight && iBoard[checkRow][column] == pebble)
+
+        while (checkRow < iBoardHeight && iBoard[checkRow][column] == pebble)
         {
             counter++;
             checkRow++;
         }
-        if(counter == 4)
-            return true;
+        return counter == 4;
+    }
 
-        //Diagonal forward check.
-        counter = 0;
-        checkColumn = row;
-        checkRow = column;
-        while(checkColumn < iBoardWidth && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
+    public boolean diagonalCheck(final Move move)
+    {
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
+        int counter = 0;
+        int checkColumn = column;
+        int checkRow = row;
+
+        while (checkColumn < iBoardWidth && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
         {
             counter++;
             checkColumn++;
@@ -126,39 +148,42 @@ public class Board
         }
         checkColumn = row - 1;
         checkRow= column - 1;
-        while(checkColumn>=0 && checkRow>=0 && iBoard[checkColumn][checkRow] == pebble)
+
+        while (checkColumn >= 0 && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
         {
             counter++;
             checkColumn--;
             checkRow--;
         }
-        if(counter == 4)
-            return true;
+        return counter == 4;
+    }
 
-        //Diagonal backward check.
-        counter = 0;
-        checkColumn = row;
-        checkRow = column;
-        while(checkColumn < iBoardWidth && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
+    public boolean diagonalBackCheck(final Move move)
+    {
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
+        int counter = 0;
+        int checkColumn = column;
+        int checkRow = row;
+
+        while (checkColumn < iBoardWidth && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
         {
             counter++;
             checkColumn++;
             checkRow--;
         }
-        checkColumn = row - 1;
-        checkRow = column + 1;
-        while(checkColumn >= 0 && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
+        checkColumn = column - 1;
+        checkRow = row + 1;
+
+        while (checkColumn >= 0 && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
         {
             counter++;
             checkColumn--;
             checkRow++;
         }
-        if(counter == 4)
-            return true;
-
-        return false;
+        return counter == 4;
     }
-
 }
 
 

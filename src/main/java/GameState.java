@@ -6,6 +6,14 @@ public class GameState
     private Board iBoard;
 
     /**
+     * @param board to be set to GameState.
+     */
+    public void setBoard(final Board board)
+    {
+        iBoard = board;
+    }
+
+    /**
      * @param move from user to be placed on board.
      */
     public void updateGame(final Move move)

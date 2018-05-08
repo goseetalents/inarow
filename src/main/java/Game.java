@@ -33,12 +33,15 @@ public class Game
 
         iGameState.printBoard(board);
 
-        boolean running = true;
-
         System.out.println("Choose column 0-5 to place pebble");
 
-        // Game loop
-        //
+        gameLoop();
+    }
+
+    private void gameLoop()
+    {
+        boolean running = true;
+
         while (running)
         {
 
