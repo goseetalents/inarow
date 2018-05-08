@@ -46,25 +46,6 @@ public class Board
         System.out.println();
     }
 
-    public char[][] getBoardLayout()
-    {
-        return iBoard;
-    }
-
-    public int getBoardHeight()
-    {
-        return iBoardHeight;
-    }
-
-    public int getBoardWidth()
-    {
-        return iBoardWidth;
-    }
-
-    public int getBottomRow()
-    {
-        return iBoardWidth-1;
-    }
 
     /**
      * @param move from the user where the pebble will be placed.
@@ -91,6 +72,10 @@ public class Board
         return hasWon;
     }
 
+    /**
+     * @param move to be checked horizontal on board.
+     * @return true if four in a row found.
+     */
     public boolean horizontalCheck(final Move move)
     {
         final int row = move.getRow();
@@ -114,7 +99,10 @@ public class Board
         return counter == 4;
     }
 
-
+    /**
+     * @param move to be checked vertical on board.
+     * @return true if four in a row found.
+     */
     public boolean verticalCheck(final Move move)
     {
         final int row = move.getRow();
@@ -131,6 +119,10 @@ public class Board
         return counter == 4;
     }
 
+    /**
+     * @param move to be checked diagonal on board.
+     * @return true if four in a row found.
+     */
     public boolean diagonalCheck(final Move move)
     {
         final int row = move.getRow();
@@ -158,6 +150,10 @@ public class Board
         return counter == 4;
     }
 
+    /**
+     * @param move to be checked diagonal backward on board.
+     * @return true if four in a row found.
+     */
     public boolean diagonalBackCheck(final Move move)
     {
         final int row = move.getRow();
@@ -183,6 +179,26 @@ public class Board
             checkRow++;
         }
         return counter == 4;
+    }
+
+    public char[][] getBoardLayout()
+    {
+        return iBoard;
+    }
+
+    public int getBoardHeight()
+    {
+        return iBoardHeight;
+    }
+
+    public int getBoardWidth()
+    {
+        return iBoardWidth;
+    }
+
+    public int getBottomRow()
+    {
+        return iBoardWidth-1;
     }
 }
 

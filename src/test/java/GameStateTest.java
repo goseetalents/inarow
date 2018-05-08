@@ -7,7 +7,7 @@ public class GameStateTest
     public void testCheckXVertical()
     {
         final GameState gameState = new GameState();
-        Board board = new Board();
+        final Board board = new Board();
         board.create();
         gameState.setBoard(board);
         gameState.getBoard().placePebble(new Move('X', 0, 0));
@@ -23,8 +23,8 @@ public class GameStateTest
     @Test
     public void testCheckXHorizontal()
     {
-        GameState gameState = new GameState();
-        Board board = new Board();
+        final GameState gameState = new GameState();
+        final Board board = new Board();
         board.create();
         gameState.setBoard(board);
         gameState.getBoard().placePebble(new Move('X', 0, 5));
@@ -40,8 +40,8 @@ public class GameStateTest
     @Test
     public void testCheckXDiagonal()
     {
-        GameState gameState = new GameState();
-        Board board = new Board();
+        final GameState gameState = new GameState();
+        final Board board = new Board();
         board.create();
         gameState.setBoard(board);
         gameState.getBoard().placePebble(new Move('X', 5, 5));
@@ -57,8 +57,8 @@ public class GameStateTest
     @Test
     public void testCheckXDiagonalBack()
     {
-        GameState gameState = new GameState();
-        Board board = new Board();
+        final GameState gameState = new GameState();
+        final Board board = new Board();
         board.create();
         gameState.setBoard(board);
         gameState.getBoard().placePebble(new Move('X', 0, 5));

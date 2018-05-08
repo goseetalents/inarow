@@ -23,55 +23,66 @@ public class Player implements PlayerInterface
      */
     public Move makeMove(final GameState gameState)
     {
-        System.out.println(iName + "'s turn");
-
         final Board board = gameState.getBoard();
         int column = 0;
         int row = 0;
         int counter = 1;
 
-        try
-        {
-            column = iScanner.nextInt();
-        }
-        catch (InputMismatchException e)
-        {
-            System.out.println("Enter a number between 0-5");
-            iScanner = new Scanner(System.in);
-        }
+        column = getColumn(column, board);
 
         // Determine which row to place pebble
         //
         while (true)
         {
-                if (column > board.getBoardWidth() - 1)
+            if (board.getBoardLayout()[board.getBottomRow()][column] == '.')
+            {
+                row = board.getBottomRow();
+                break;
+            }
+            else if (board.getBoardLayout()[board.getBottomRow()][column] == 'X'
+                    || board.getBoardLayout()[board.getBottomRow()][column] == 'O')
+            {
+                if (board.getBoardLayout()[board.getBottomRow() - counter][column] == '.')
                 {
-                    System.out.println("That's not a valid column");
+                    row = board.getBottomRow() - counter;
                     break;
                 }
-                if (board.getBoardLayout()[board.getBottomRow()][column] == '.')
-                {
-                    row = board.getBottomRow();
-                    break;
-                }
-                else if (board.getBoardLayout()[board.getBottomRow()][column] == 'X'
-                        || board.getBoardLayout()[board.getBottomRow()][column] == 'O')
-                {
-                    if (board.getBoardLayout()[board.getBottomRow() - counter][column] == '.')
-                    {
-                        row = board.getBottomRow() - counter;
-                        break;
-                    }
-                }
-                if (counter == board.getBoardWidth())
-                {
-                    System.out.println("That column is full");
-                    break;
-                }
+            }
+            if (counter == board.getBoardWidth())
+            {
+                System.out.println("That column is full");
+                break;
+            }
 
             counter++;
         }
         return new Move(iPebble, column, row);
+    }
+
+    private int getColumn(int column, final Board board)
+    {
+        boolean correctUserInput = true;
+        while (correctUserInput)
+        {
+            System.out.println(iName + "'s turn");
+            try
+            {
+                column = iScanner.nextInt();
+                correctUserInput = false;
+            }
+            catch (InputMismatchException e)
+            {
+                System.out.println("Enter a number between 0-5");
+                iScanner = new Scanner(System.in);
+                correctUserInput = true;
+            }
+            if (column > board.getBoardWidth() - 1)
+            {
+                System.out.println("That's not a valid column");
+                correctUserInput = true;
+            }
+        }
+        return column;
     }
 
     public String getName()
