@@ -1,3 +1,6 @@
+/**
+ * Board class to handle board set up and logic.
+ */
 public class Board
 {
     private final char[][] iBoard;
@@ -11,6 +14,9 @@ public class Board
         iBoardWidth = 6;
     }
 
+    /**
+     * Fill the board with "." in 6x6 pattern.
+     */
     public void create()
     {
         for (int i = 0; i < iBoardHeight; i++)
@@ -22,16 +28,21 @@ public class Board
         }
     }
 
+    /**
+     * Print the board at current state.
+     */
     public void print()
     {
         for (int i = 0; i < iBoardHeight; i++)
         {
             for (int j = 0; j < iBoardWidth; j++)
             {
-                System.out.print(iBoard[i][j]);
+                System.out.print(iBoard[i][j] + " ");
             }
             System.out.println();
         }
+        System.out.println("–––––––––––");
+        System.out.println("0 1 2 3 4 5");
         System.out.println();
     }
 
@@ -55,186 +66,123 @@ public class Board
         return iBoardWidth-1;
     }
 
+    /**
+     * @param move from the user where the pebble will be placed.
+     */
     public void placePebble(final Move move)
     {
         iBoard[move.getRow()][move.getColumn()] = move.getPebble();
         print();
     }
 
-    public boolean checkPebbleHorizontal(final char pebble)
+    /**
+     * @param move, the current move from the player.
+     * @return true if the move connected four in a row.
+     */
+    public boolean checkIfMoveWon(final Move move)
     {
-        boolean running = true;
-        int counter = 0;
-        while (running)
+        boolean hasWon = false;
+
+        if (horizontalCheck(move) || verticalCheck(move) ||  diagonalCheck(move) || diagonalBackCheck(move))
         {
-            for (int i = 0; i < iBoardWidth; i++)
-            {
-                for (int j = 0; j < iBoardHeight; j++)
-                {
-                    if (iBoard[i][j] == pebble)
-                    {
-                        counter++;
-                    }
-                    else
-                    {
-                        counter = 0;
-                    }
-                    if (counter >= 4)
-                    {
-                        running = false;
-                    }
-                }
-            }
-            break;
+            hasWon = true;
         }
-        return running;
+
+        return hasWon;
     }
 
-    public boolean checkPebbleVertical(final char pebble)
+    public boolean horizontalCheck(final Move move)
     {
-        boolean running = true;
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
         int counter = 0;
-        while (running)
+        int checkColumn = column;
+
+        while (checkColumn < iBoardWidth && iBoard[row][checkColumn] == pebble)
         {
-            for (int i = 0; i < iBoardHeight; i++)
-            {
-                for (int j = 0; j < iBoardWidth; j++)
-                {
-                    if (iBoard[j][i] == pebble)
-                    {
-                        counter++;
-                    }
-                    else
-                    {
-                        counter = 0;
-                    }
-                    if (counter >= 4)
-                    {
-                        running = false;
-                    }
-                }
-            }
-            break;
+            counter++;
+            checkColumn++;
         }
-        return running;
+        checkColumn = column - 1;
+        while (checkColumn >= 0 && iBoard[row][checkColumn] == pebble)
+        {
+            counter++;
+            checkColumn--;
+        }
+
+        return counter == 4;
     }
 
-    public boolean checkPebbleDiagonal(final char pebble)
+
+    public boolean verticalCheck(final Move move)
     {
-        boolean checkDiagonalForward = true;
-        boolean running = true;
-        int checkColumn = 1;
-        int checkRow = 1;
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
         int counter = 0;
+        int checkRow = row;
 
-        while (running)
+        while (checkRow < iBoardHeight && iBoard[checkRow][column] == pebble)
         {
-            for (int i = 0; i < iBoardWidth; i++)
-            {
-                for (int j = 0; j < iBoardHeight; j++)
-                {
-                    if (iBoard[i][j] == pebble)
-                    {
-                        counter++;
-                        while (checkDiagonalForward)
-                        {
-                            if (checkColumn + i <= iBoardWidth - 1 && checkRow + j <= iBoardHeight - 1)
-                            {
-                                if (iBoard[i + checkColumn][j + checkRow] == pebble)
-                                {
-                                    counter++;
-                                }
-                            }
-
-                            checkColumn++;
-                            checkRow++;
-
-                            if (checkColumn == iBoardWidth - 1 || checkRow == iBoardHeight - 1)
-                            {
-                                checkDiagonalForward = false;
-                                break;
-                            }
-                            if (counter >= 4)
-                            {
-                                checkDiagonalForward = false;
-                                running = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (counter >= 4)
-                    {
-                        running = false;
-                        break;
-                    }
-
-                    counter = 0;
-                    checkColumn = 1;
-                    checkRow = 1;
-                }
-            }
-            break;
+            counter++;
+            checkRow++;
         }
-        return running;
+        return counter == 4;
     }
 
-    public boolean checkPebbleDiagonalBackward(final char pebble)
+    public boolean diagonalCheck(final Move move)
     {
-        boolean checkDiagonalBackward = true;
-        boolean running = true;
-        int checkColumn = 1;
-        int checkRow = 1;
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
         int counter = 0;
+        int checkColumn = column;
+        int checkRow = row;
 
-        while (running)
+        while (checkColumn < iBoardWidth && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
         {
-            for (int i = 0; i < iBoardWidth; i++)
-            {
-                for (int j = 0; j < iBoardHeight; j++)
-                {
-                    if (iBoard[i][j] == pebble)
-                    {
-                        counter++;
-
-                        while (checkDiagonalBackward)
-                        {
-                            if (i - checkColumn >= 0 && j - checkRow >= 0)
-                            {
-                                if (iBoard[i - checkColumn][j - checkRow] == pebble)
-                                {
-                                    counter++;
-                                }
-                            }
-
-                            checkColumn++;
-                            checkRow++;
-
-                            if (checkColumn == 0 || checkRow == iBoardHeight - 1)
-                            {
-                                checkDiagonalBackward = false;
-                                break;
-                            }
-                            if (counter >= 4)
-                            {
-                                checkDiagonalBackward = false;
-                                running = false;
-                                break;
-                            }
-                        }
-                    }
-                    if (counter >= 4)
-                    {
-                        running = false;
-                        break;
-                    }
-                    counter = 0;
-                    checkColumn = 1;
-                    checkRow = 1;
-                }
-            }
-            break;
+            counter++;
+            checkColumn++;
+            checkRow++;
         }
-        return running;
+        checkColumn = row - 1;
+        checkRow= column - 1;
+
+        while (checkColumn >= 0 && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
+        {
+            counter++;
+            checkColumn--;
+            checkRow--;
+        }
+        return counter == 4;
+    }
+
+    public boolean diagonalBackCheck(final Move move)
+    {
+        final int row = move.getRow();
+        final int column = move.getColumn();
+        final char pebble = move.getPebble();
+        int counter = 0;
+        int checkColumn = column;
+        int checkRow = row;
+
+        while (checkColumn < iBoardWidth && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
+        {
+            counter++;
+            checkColumn++;
+            checkRow--;
+        }
+        checkColumn = column - 1;
+        checkRow = row + 1;
+
+        while (checkColumn >= 0 && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
+        {
+            counter++;
+            checkColumn--;
+            checkRow++;
+        }
+        return counter == 4;
     }
 }
 

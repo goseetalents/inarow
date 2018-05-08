@@ -1,3 +1,6 @@
+/**
+ * Class to represent a move in the game.
+ */
 public class Move
 {
     private final char iPebble;
