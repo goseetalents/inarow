@@ -64,7 +64,7 @@ public class Board
     {
         boolean hasWon = false;
 
-        if (horizontalCheck(move) || verticalCheck(move) ||  diagonalCheck(move) || diagonalBackCheck(move))
+        if (horizontalCheck(move) || verticalCheck(move) || diagonalCheck(move) || diagonalBackCheck(move))
         {
             hasWon = true;
         }
@@ -74,7 +74,7 @@ public class Board
 
     /**
      * @param move to be checked horizontal on board.
-     * @return true if four in a row found.
+     * @return true if four or more in a row found.
      */
     public boolean horizontalCheck(final Move move)
     {
@@ -96,12 +96,12 @@ public class Board
             checkColumn--;
         }
 
-        return counter == 4;
+        return counter == 4 || counter > 4;
     }
 
     /**
      * @param move to be checked vertical on board.
-     * @return true if four in a row found.
+     * @return true if four or more in a row found.
      */
     public boolean verticalCheck(final Move move)
     {
@@ -116,12 +116,12 @@ public class Board
             counter++;
             checkRow++;
         }
-        return counter == 4;
+        return counter == 4 || counter > 4;
     }
 
     /**
      * @param move to be checked diagonal on board.
-     * @return true if four in a row found.
+     * @return true if four or more in a row found.
      */
     public boolean diagonalCheck(final Move move)
     {
@@ -139,7 +139,7 @@ public class Board
             checkRow++;
         }
         checkColumn = row - 1;
-        checkRow= column - 1;
+        checkRow = column - 1;
 
         while (checkColumn >= 0 && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
         {
@@ -147,12 +147,12 @@ public class Board
             checkColumn--;
             checkRow--;
         }
-        return counter == 4;
+        return counter == 4 || counter > 4;
     }
 
     /**
      * @param move to be checked diagonal backward on board.
-     * @return true if four in a row found.
+     * @return true if four or more in a row found.
      */
     public boolean diagonalBackCheck(final Move move)
     {
@@ -163,7 +163,7 @@ public class Board
         int checkColumn = column;
         int checkRow = row;
 
-        while (checkColumn < iBoardWidth && checkRow >= 0 && iBoard[checkColumn][checkRow] == pebble)
+        while (checkColumn < iBoardWidth && checkRow >= 0 && iBoard[checkRow][checkColumn] == pebble)
         {
             counter++;
             checkColumn++;
@@ -172,13 +172,14 @@ public class Board
         checkColumn = column - 1;
         checkRow = row + 1;
 
-        while (checkColumn >= 0 && checkRow < iBoardHeight && iBoard[checkColumn][checkRow] == pebble)
+        while (checkColumn >= 0 && checkRow < iBoardHeight && iBoard[checkRow][checkColumn] == pebble)
         {
             counter++;
             checkColumn--;
             checkRow++;
         }
-        return counter == 4;
+        System.out.println(counter);
+        return counter == 4 || counter > 4;
     }
 
     public char[][] getBoardLayout()
@@ -198,7 +199,7 @@ public class Board
 
     public int getBottomRow()
     {
-        return iBoardWidth-1;
+        return iBoardWidth - 1;
     }
 }
 

@@ -1,4 +1,5 @@
 import java.util.InputMismatchException;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -24,11 +25,18 @@ public class Player implements PlayerInterface
     public Move makeMove(final GameState gameState)
     {
         final Board board = gameState.getBoard();
-        int column = 0;
+        int column;
+        if (iPebble == 'O')
+        {
+            column = getRandomColumn(board);
+        }
+        else
+        {
+            column = getColumn(board);
+        }
+
         int row = 0;
         int counter = 1;
-
-        column = getColumn(column, board);
 
         // Determine which row to place pebble
         //
@@ -59,8 +67,40 @@ public class Player implements PlayerInterface
         return new Move(iPebble, column, row);
     }
 
-    private int getColumn(int column, final Board board)
+    /**
+     * @param board to place pebble on.
+     * @return a valid random column.
+     */
+    private int getRandomColumn(final Board board)
     {
+        int column = 0;
+        boolean correctUserInput = true;
+        while (correctUserInput)
+        {
+            System.out.println(iName + "'s turn");
+
+            column = new Random().nextInt(6);
+            System.out.println(column);
+            if (column > board.getBoardWidth() - 1)
+            {
+                System.out.println("That's not a valid column");
+                correctUserInput = true;
+            }
+            else
+            {
+                correctUserInput = false;
+            }
+        }
+        return column;
+    }
+
+    /**
+     * @param board to check.
+     * @return a valid column from the player.
+     */
+    private int getColumn(final Board board)
+    {
+        int column = 0;
         boolean correctUserInput = true;
         while (correctUserInput)
         {

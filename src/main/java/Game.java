@@ -22,11 +22,10 @@ public class Game
      */
     public void createGame()
     {
-        System.out.println("Please enter name for player one: ");
+        System.out.println("Please enter name for player: ");
         iPlayers.add(new Player(iScanner.next(), 'X'));
 
-        System.out.println("Please enter name for player two: ");
-        iPlayers.add(new Player(iScanner.next(), 'O'));
+        iPlayers.add(new Player("Bot", 'O'));
 
         final Board board = new Board();
         board.create();
