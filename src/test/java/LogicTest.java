@@ -1,7 +1,7 @@
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GameStateTest
+public class LogicTest
 {
     @Test
     public void testVertical()
@@ -15,7 +15,6 @@ public class GameStateTest
         gameState.getBoard().placePebble(new Move('X', 0, 3));
         final Move move = new Move('X', 0, 2);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
@@ -27,13 +26,11 @@ public class GameStateTest
         final Board board = new Board();
         board.create();
         gameState.setBoard(board);
-        gameState.getBoard().placePebble(new Move('X', 0, 0));
-        gameState.getBoard().placePebble(new Move('X', 1, 0));
-        gameState.getBoard().placePebble(new Move('X', 2, 0));
-        final Move move = new Move('X', 3, 0);
+        gameState.getBoard().placePebble(new Move('X', 0, 5));
+        gameState.getBoard().placePebble(new Move('X', 1, 5));
+        gameState.getBoard().placePebble(new Move('X', 2, 5));
+        final Move move = new Move('X', 3, 5);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
-
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
 
@@ -49,7 +46,6 @@ public class GameStateTest
         gameState.getBoard().placePebble(new Move('X', 1, 5));
         final Move move = new Move('X', 0, 5);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
@@ -61,12 +57,11 @@ public class GameStateTest
         final Board board = new Board();
         board.create();
         gameState.setBoard(board);
-        gameState.getBoard().placePebble(new Move('X', 5, 5));
-        gameState.getBoard().placePebble(new Move('X', 4, 4));
         gameState.getBoard().placePebble(new Move('X', 3, 3));
-        final Move move = new Move('X', 2, 2);
+        gameState.getBoard().placePebble(new Move('X', 2, 2));
+        gameState.getBoard().placePebble(new Move('X', 1, 1));
+        final Move move = new Move('X', 0, 0);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
@@ -112,8 +107,6 @@ public class GameStateTest
         final Move finalMove = new Move('X', 3, 3);
         gameState.getBoard().placePebble(finalMove);
 
-        gameState.getBoard().checkIfMoveWon(finalMove);
-
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(finalMove));
     }
     @Test
@@ -128,7 +121,6 @@ public class GameStateTest
         gameState.getBoard().placePebble(new Move('X', 4, 3));
         final Move move = new Move('X', 5, 2);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
@@ -145,7 +137,6 @@ public class GameStateTest
         gameState.getBoard().placePebble(new Move('X', 1, 4));
         final Move move = new Move('X', 0, 5);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
@@ -165,15 +156,11 @@ public class GameStateTest
         final Move thirdMove = new Move('X', 3, 2);
         gameState.getBoard().placePebble(thirdMove);
 
-
         final Move firstMove = new Move('X', 0, 5);
         gameState.getBoard().placePebble(firstMove);
 
-
         final Move lastMove = new Move('X', 2, 3);
         gameState.getBoard().placePebble(lastMove);
-
-        gameState.getBoard().checkIfMoveWon(lastMove);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(lastMove));
     }

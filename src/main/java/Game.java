@@ -7,25 +7,25 @@ import java.util.Scanner;
 public class Game
 {
     private final GameState iGameState;
-    private Scanner iScanner;
-    private final ArrayList<Player> iPlayers;
+    private final Scanner iScanner;
+    private final ArrayList<PlayerInterface> iPlayers;
 
     public Game()
     {
         iGameState = new GameState();
         iScanner = new Scanner(System.in);
-        iPlayers = new ArrayList<Player>();
+        iPlayers = new ArrayList<PlayerInterface>();
     }
 
     /**
      * Method to set up game and run game loop.
      */
-    public void createGame()
+    public void create()
     {
         System.out.println("Please enter name for player: ");
         iPlayers.add(new Player(iScanner.next(), 'X'));
 
-        iPlayers.add(new Player("Bot", 'O'));
+        iPlayers.add(new Bot('O'));
 
         final Board board = new Board();
         board.create();
@@ -43,8 +43,7 @@ public class Game
 
         while (running)
         {
-
-            for (final Player player : iPlayers)
+            for (final PlayerInterface player : iPlayers)
             {
                 final Move move = player.makeMove(iGameState);
                 iGameState.updateGame(move);
@@ -52,6 +51,11 @@ public class Game
                 if (iGameState.getBoard().checkIfMoveWon(move))
                 {
                     System.out.println(player.getName() + " wins!");
+                    running = false;
+                    break;
+                }
+                if (iGameState.getBoard().isBoardFull())
+                {
                     running = false;
                     break;
                 }

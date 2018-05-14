@@ -1,9 +1,19 @@
+import java.util.LinkedList;
+
 /**
  * Class to handle the state of the game.
  */
 public class GameState
 {
     private Board iBoard;
+    private final LinkedList<Move> iPlayerMoves;
+    private final LinkedList<Move> iBotMoves;
+
+    public GameState()
+    {
+        iPlayerMoves = new LinkedList<Move>();
+        iBotMoves = new LinkedList<Move>();
+    }
 
     /**
      * @param board to be set to GameState.
@@ -18,6 +28,14 @@ public class GameState
      */
     public void updateGame(final Move move)
     {
+        if (move.getPebble() == 'X')
+        {
+            iPlayerMoves.add(move);
+        }
+        else
+        {
+            iBotMoves.add(move);
+        }
         iBoard.placePebble(move);
     }
 
@@ -34,6 +52,16 @@ public class GameState
     public Board getBoard()
     {
         return iBoard;
+    }
+
+    public LinkedList<Move> getPlayerMoves()
+    {
+        return iPlayerMoves;
+    }
+
+    public LinkedList<Move> getBotMoves()
+    {
+        return iBotMoves;
     }
 }
 

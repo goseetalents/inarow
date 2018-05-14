@@ -1,5 +1,4 @@
 import java.util.InputMismatchException;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -25,27 +24,19 @@ public class Player implements PlayerInterface
     public Move makeMove(final GameState gameState)
     {
         final Board board = gameState.getBoard();
-        int column;
-        if (iPebble == 'O')
-        {
-            column = getRandomColumn(board);
-        }
-        else
-        {
-            column = getColumn(board);
-        }
-
+        int column = getColumn(board);
         int row = 0;
         int counter = 1;
+        boolean running = true;
 
         // Determine which row to place pebble
         //
-        while (true)
+        while (running)
         {
             if (board.getBoardLayout()[board.getBottomRow()][column] == '.')
             {
                 row = board.getBottomRow();
-                break;
+                running = false;
             }
             else if (board.getBoardLayout()[board.getBottomRow()][column] == 'X'
                     || board.getBoardLayout()[board.getBottomRow()][column] == 'O')
@@ -53,13 +44,13 @@ public class Player implements PlayerInterface
                 if (board.getBoardLayout()[board.getBottomRow() - counter][column] == '.')
                 {
                     row = board.getBottomRow() - counter;
-                    break;
+                    running = false;
                 }
             }
             if (counter == board.getBoardWidth())
             {
                 System.out.println("That column is full");
-                break;
+                running = false;
             }
 
             counter++;
@@ -67,36 +58,10 @@ public class Player implements PlayerInterface
         return new Move(iPebble, column, row);
     }
 
-    /**
-     * @param board to place pebble on.
-     * @return a valid random column.
-     */
-    private int getRandomColumn(final Board board)
-    {
-        int column = 0;
-        boolean correctUserInput = true;
-        while (correctUserInput)
-        {
-            System.out.println(iName + "'s turn");
-
-            column = new Random().nextInt(6);
-            System.out.println(column);
-            if (column > board.getBoardWidth() - 1)
-            {
-                System.out.println("That's not a valid column");
-                correctUserInput = true;
-            }
-            else
-            {
-                correctUserInput = false;
-            }
-        }
-        return column;
-    }
 
     /**
      * @param board to check.
-     * @return a valid column from the player.
+     * @return a valid column.
      */
     private int getColumn(final Board board)
     {
