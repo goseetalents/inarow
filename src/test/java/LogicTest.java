@@ -13,6 +13,7 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 0, 5));
         gameState.getBoard().placePebble(new Move('X', 0, 4));
         gameState.getBoard().placePebble(new Move('X', 0, 3));
+
         final Move move = new Move('X', 0, 2);
         gameState.getBoard().placePebble(move);
 
@@ -29,8 +30,10 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 0, 5));
         gameState.getBoard().placePebble(new Move('X', 1, 5));
         gameState.getBoard().placePebble(new Move('X', 2, 5));
+
         final Move move = new Move('X', 3, 5);
         gameState.getBoard().placePebble(move);
+
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
 
@@ -44,6 +47,7 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 3, 5));
         gameState.getBoard().placePebble(new Move('X', 2, 5));
         gameState.getBoard().placePebble(new Move('X', 1, 5));
+
         final Move move = new Move('X', 0, 5);
         gameState.getBoard().placePebble(move);
 
@@ -60,6 +64,7 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 3, 3));
         gameState.getBoard().placePebble(new Move('X', 2, 2));
         gameState.getBoard().placePebble(new Move('X', 1, 1));
+
         final Move move = new Move('X', 0, 0);
         gameState.getBoard().placePebble(move);
 
@@ -76,13 +81,12 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 2, 2));
         gameState.getBoard().placePebble(new Move('X', 3, 3));
         gameState.getBoard().placePebble(new Move('X', 4, 4));
+
         final Move move = new Move('X', 5, 5);
         gameState.getBoard().placePebble(move);
-        gameState.getBoard().checkIfMoveWon(move);
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
-
 
     @Test
     public void testDiagonalNotInOrder()
@@ -109,6 +113,7 @@ public class LogicTest
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(finalMove));
     }
+
     @Test
     public void testCheckXDiagonalBack()
     {
@@ -119,6 +124,7 @@ public class LogicTest
         gameState.getBoard().placePebble(new Move('X', 2, 5));
         gameState.getBoard().placePebble(new Move('X', 3, 4));
         gameState.getBoard().placePebble(new Move('X', 4, 3));
+
         final Move move = new Move('X', 5, 2);
         gameState.getBoard().placePebble(move);
 
@@ -140,7 +146,6 @@ public class LogicTest
 
         Assert.assertTrue("Expected to win", gameState.getBoard().checkIfMoveWon(move));
     }
-
 
     @Test
     public void testDiagonalBackNotInOrder()

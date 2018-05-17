@@ -37,6 +37,9 @@ public class Game
         gameLoop();
     }
 
+    /**
+     * Game loop.
+     */
     private void gameLoop()
     {
         boolean running = true;
@@ -45,17 +48,18 @@ public class Game
         {
             for (final PlayerInterface player : iPlayers)
             {
+                if (iGameState.getXMoves().size() == 18 || iGameState.getOMoves().size() == 18)
+                {
+                    System.out.println("No more moves! No winner.");
+                    running = false;
+                }
+
                 final Move move = player.makeMove(iGameState);
                 iGameState.updateGame(move);
 
                 if (iGameState.getBoard().checkIfMoveWon(move))
                 {
                     System.out.println(player.getName() + " wins!");
-                    running = false;
-                    break;
-                }
-                if (iGameState.getBoard().isBoardFull())
-                {
                     running = false;
                     break;
                 }

@@ -1,30 +1,27 @@
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.Random;
 
 /**
- * Player class to make move.
+ * Simple Bot will only make random moves.
  */
-public class Player implements PlayerInterface
+public class SimpleBot implements PlayerInterface
 {
-    private final String iName;
     private final char iPebble;
-    private Scanner iScanner;
+    private final String iName;
 
-    public Player(final String name, final char pebble)
+    public SimpleBot(final char pebble)
     {
-        iName = name;
         iPebble = pebble;
-        iScanner = new Scanner(System.in);
+        iName = "Simple Bot";
     }
 
     /**
-     * @param gameState the current state of our game.
-     * @return the move with which row and column the pebble will be placed.
+     * @param gameState to determine move.
+     * @return random move.
      */
     public Move makeMove(final GameState gameState)
     {
         final Board board = gameState.getBoard();
-        int column = getColumn(board);
+        int column = getColumn(gameState);
         int row = 0;
         int counter = 1;
         boolean running = true;
@@ -41,16 +38,20 @@ public class Player implements PlayerInterface
             else if (board.getBoardLayout()[board.getBottomRow()][column] == 'X'
                     || board.getBoardLayout()[board.getBottomRow()][column] == 'O')
             {
-                if (board.getBoardLayout()[board.getBottomRow() - counter][column] == '.')
+                if (counter > 0 && counter < 6)
                 {
-                    row = board.getBottomRow() - counter;
-                    running = false;
+                    if (board.getBoardLayout()[board.getBottomRow() - counter][column] == '.')
+                    {
+                        row = board.getBottomRow() - counter;
+                        running = false;
+                    }
                 }
             }
             if (counter == board.getBoardWidth())
             {
                 System.out.println("That column is full");
-                running = false;
+                column = getColumn(gameState);
+                running = true;
             }
 
             counter++;
@@ -58,33 +59,29 @@ public class Player implements PlayerInterface
         return new Move(iPebble, column, row);
     }
 
-
     /**
-     * @param board to check.
-     * @return a valid column.
+     * @param gameState to find valid column.
+     * @return a valid random column.
      */
-    private int getColumn(final Board board)
+    private int getColumn(final GameState gameState)
     {
         int column = 0;
         boolean correctUserInput = true;
         while (correctUserInput)
         {
             System.out.println(iName + "'s turn");
-            try
-            {
-                column = iScanner.nextInt();
-                correctUserInput = false;
-            }
-            catch (InputMismatchException e)
-            {
-                System.out.println("Enter a number between 0-5");
-                iScanner = new Scanner(System.in);
-                correctUserInput = true;
-            }
-            if (column > board.getBoardWidth() - 1)
+
+            column = new Random().nextInt(6);
+
+            System.out.println(column);
+            if (column > gameState.getBoard().getBoardWidth() - 1)
             {
                 System.out.println("That's not a valid column");
                 correctUserInput = true;
+            }
+            else
+            {
+                correctUserInput = false;
             }
         }
         return column;
@@ -94,5 +91,4 @@ public class Player implements PlayerInterface
     {
         return iName;
     }
-
 }
