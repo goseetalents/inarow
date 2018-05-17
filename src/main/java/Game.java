@@ -54,11 +54,6 @@ public class Game
                     running = false;
                     break;
                 }
-                if (iGameState.getBoard().isBoardFull())
-                {
-                    running = false;
-                    break;
-                }
             }
         }
     }

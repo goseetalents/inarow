@@ -6,13 +6,13 @@ import java.util.LinkedList;
 public class GameState
 {
     private Board iBoard;
-    private final LinkedList<Move> iPlayerMoves;
-    private final LinkedList<Move> iBotMoves;
+    private final LinkedList<Move> iXMoves;
+    private final LinkedList<Move> iOMoves;
 
     public GameState()
     {
-        iPlayerMoves = new LinkedList<Move>();
-        iBotMoves = new LinkedList<Move>();
+        iXMoves = new LinkedList<Move>();
+        iOMoves = new LinkedList<Move>();
     }
 
     /**
@@ -30,11 +30,11 @@ public class GameState
     {
         if (move.getPebble() == 'X')
         {
-            iPlayerMoves.add(move);
+            iXMoves.add(move);
         }
-        else
+        else if (move.getPebble() == 'O')
         {
-            iBotMoves.add(move);
+            iOMoves.add(move);
         }
         iBoard.placePebble(move);
     }
@@ -54,14 +54,32 @@ public class GameState
         return iBoard;
     }
 
-    public LinkedList<Move> getPlayerMoves()
+    public LinkedList<Move> getXMoves()
     {
-        return iPlayerMoves;
+        return iXMoves;
     }
 
-    public LinkedList<Move> getBotMoves()
+    public LinkedList<Move> getOMoves()
     {
-        return iBotMoves;
+        return iOMoves;
+    }
+
+    public void updateGameWithString(final String boardTest)
+    {
+        final char[][] board = new char[6][6];
+
+        final String[] split = boardTest.split("\n");
+
+        for (int row = 0; row < 6; row++)
+        {
+            for (int column = 0; column < 6; column++)
+            {
+                final char c = split[row].charAt(column);
+                updateGame(new Move(c, column, row));
+                board[row][column] = c;
+            }
+        }
+        iBoard.setBoard(board);
     }
 }
 

@@ -5,17 +5,17 @@ import java.util.LinkedList;
  */
 public class Board
 {
-    private final char[][] iBoard;
+    private  char[][] iBoard;
     private final int iBoardHeight;
     private final int iBoardWidth;
 
-    private  LinkedList<Move> iPlayerHorizontalMoves;
-    private  LinkedList<Move> iPlayerDiagonalMoves;
-    private  LinkedList<Move> iPlayerDiagonalBackMoves;
+    private  LinkedList<Move> iXHorizontalMoves;
+    private  LinkedList<Move> iXDiagonalMoves;
+    private  LinkedList<Move> iXDiagonalBackMoves;
 
-    private  LinkedList<Move> iBotHorizontalMoves;
-    private  LinkedList<Move> iBotDiagonalMoves;
-    private  LinkedList<Move> iBotDiagonalBackMoves;
+    private  LinkedList<Move> iOHorizontalMoves;
+    private  LinkedList<Move> iODiagonalMoves;
+    private  LinkedList<Move> iODiagonalBackMoves;
 
 
 
@@ -25,13 +25,13 @@ public class Board
         iBoardHeight = 6;
         iBoardWidth = 6;
 
-        iPlayerHorizontalMoves = new LinkedList<Move>();
-        iPlayerDiagonalMoves = new LinkedList<Move>();
-        iPlayerDiagonalBackMoves = new LinkedList<Move>();
+        iXHorizontalMoves = new LinkedList<Move>();
+        iXDiagonalMoves = new LinkedList<Move>();
+        iXDiagonalBackMoves = new LinkedList<Move>();
 
-        iBotHorizontalMoves = new LinkedList<Move>();
-        iBotDiagonalMoves = new LinkedList<Move>();
-        iBotDiagonalBackMoves = new LinkedList<Move>();
+        iOHorizontalMoves = new LinkedList<Move>();
+        iODiagonalMoves = new LinkedList<Move>();
+        iODiagonalBackMoves = new LinkedList<Move>();
     }
 
     /**
@@ -66,24 +66,6 @@ public class Board
         System.out.println();
     }
 
-    public boolean isBoardFull()
-    {
-        boolean isFull = false;
-        for (int i = 0; i < iBoardHeight; i++)
-        {
-            for (int j = 0; j < iBoardWidth; j++)
-            {
-                if (iBoard[i][j] == 'X' || iBoard[i][j] == '0')
-                {
-                    System.out.println("Board full");
-                    isFull = true;
-                }
-            }
-        }
-        return isFull;
-    }
-
-
     /**
      * @param move from the user where the pebble will be placed.
      */
@@ -105,19 +87,18 @@ public class Board
         {
             hasWon = true;
         }
-
         clearMoves();
         return hasWon;
     }
 
     private void clearMoves()
     {
-        iPlayerHorizontalMoves.clear();
-        iPlayerDiagonalMoves.clear();
-        iPlayerDiagonalBackMoves.clear();
-        iBotHorizontalMoves.clear();
-        iBotDiagonalMoves.clear();
-        iBotDiagonalBackMoves.clear();
+        iXHorizontalMoves.clear();
+        iXDiagonalMoves.clear();
+        iXDiagonalBackMoves.clear();
+        iOHorizontalMoves.clear();
+        iODiagonalMoves.clear();
+        iODiagonalBackMoves.clear();
     }
 
     /**
@@ -136,11 +117,11 @@ public class Board
         {
             if (pebble == 'X')
             {
-                iPlayerHorizontalMoves.add(new Move(pebble, checkColumn, row));
+                iXHorizontalMoves.add(new Move(pebble, checkColumn, row));
             }
             else
             {
-                iBotHorizontalMoves.add(new Move(pebble, checkColumn, row));
+                iOHorizontalMoves.add(new Move(pebble, checkColumn, row));
             }
             counter++;
             checkColumn++;
@@ -151,11 +132,11 @@ public class Board
         {
             if (pebble == 'X')
             {
-                iPlayerHorizontalMoves.add(new Move(pebble, checkColumn, row));
+                iXHorizontalMoves.add(new Move(pebble, checkColumn, row));
             }
             else
             {
-                iBotHorizontalMoves.add(new Move(pebble, checkColumn, row));
+                iOHorizontalMoves.add(new Move(pebble, checkColumn, row));
             }
             counter++;
             checkColumn--;
@@ -200,28 +181,28 @@ public class Board
         {
             if (pebble == 'X')
             {
-                iPlayerDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
+                iXDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
             }
             else
             {
-                iBotDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
+                iODiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
             }
             counter++;
             checkColumn++;
             checkRow++;
         }
-        checkColumn = row - 1;
-        checkRow = column - 1;
+        checkColumn = column - 1;
+        checkRow = row - 1;
 
         while (checkColumn >= 0 && checkRow >= 0 && iBoard[checkRow][checkColumn] == pebble)
         {
             if (pebble == 'X')
             {
-                iPlayerDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
+                iXDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
             }
             else
             {
-                iBotDiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
+                iODiagonalMoves.add(new Move(pebble, checkColumn, checkRow));
             }
             counter++;
             checkColumn--;
@@ -247,11 +228,11 @@ public class Board
         {
             if (pebble == 'X')
             {
-                iPlayerDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
+                iXDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
             }
             else
             {
-                iBotDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
+                iODiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
             }
             counter++;
             checkColumn++;
@@ -264,11 +245,11 @@ public class Board
         {
             if (pebble == 'X')
             {
-                iPlayerDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
+                iXDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
             }
             else
             {
-                iBotDiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
+                iODiagonalBackMoves.add(new Move(pebble, checkRow, checkColumn));
             }
             counter++;
             checkColumn--;
@@ -297,34 +278,44 @@ public class Board
         return iBoardWidth - 1;
     }
 
-    public LinkedList<Move> getPlayerHorizontalMoves()
+    public LinkedList<Move> getXHorizontalMoves()
     {
-        return iPlayerHorizontalMoves;
+        return iXHorizontalMoves;
     }
 
-    public LinkedList<Move> getPlayerDiagonalMoves()
+    public LinkedList<Move> getXDiagonalMoves()
     {
-        return iPlayerDiagonalMoves;
+        return iXDiagonalMoves;
     }
 
-    public LinkedList<Move> getPlayerDiagonalBackMoves()
+    public LinkedList<Move> getXDiagonalBackMoves()
     {
-        return iPlayerDiagonalBackMoves;
+        return iXDiagonalBackMoves;
     }
 
-    public LinkedList<Move> getBotHorizontalMoves()
+    public LinkedList<Move> getOHorizontalMoves()
     {
-        return iBotHorizontalMoves;
+        return iOHorizontalMoves;
     }
 
-    public LinkedList<Move> getBotDiagonalMoves()
+    public LinkedList<Move> getODiagonalMoves()
     {
-        return iBotDiagonalMoves;
+        return iODiagonalMoves;
     }
 
-    public LinkedList<Move> getBotDiagonalBackMoves()
+    public LinkedList<Move> getODiagonalBackMoves()
     {
-        return iBotDiagonalBackMoves;
+        return iODiagonalBackMoves;
+    }
+
+    public char getPebble(final int column, final int row)
+    {
+        return iBoard[row][column];
+    }
+
+    public void setBoard(final char[][] board)
+    {
+        iBoard = board;
     }
 }
 
