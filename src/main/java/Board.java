@@ -9,9 +9,9 @@ public class Board
     private final int iBoardHeight;
     private final int iBoardWidth;
 
-    private LinkedList<Move> iXHorizontalMoves;
-    private LinkedList<Move> iXDiagonalMoves;
-    private LinkedList<Move> iXDiagonalBackMoves;
+    private  LinkedList<Move> iXHorizontalMoves;
+    private  LinkedList<Move> iXDiagonalMoves;
+    private  LinkedList<Move> iXDiagonalBackMoves;
 
     private LinkedList<Move> iOHorizontalMoves;
     private LinkedList<Move> iODiagonalMoves;
@@ -86,7 +86,6 @@ public class Board
         {
             hasWon = true;
         }
-
         clearMoves();
         return hasWon;
     }
