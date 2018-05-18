@@ -48,7 +48,7 @@ public class Game
         {
             for (final PlayerInterface player : iPlayers)
             {
-                if (iGameState.getXMoves().size() == 18 || iGameState.getOMoves().size() == 18)
+                if (iGameState.getXMoves().size() == 18 && iGameState.getOMoves().size() == 18)
                 {
                     System.out.println("No more moves! No winner.");
                     running = false;

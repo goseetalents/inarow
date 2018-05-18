@@ -22,6 +22,13 @@ public class BotTest
         {
             for (final PlayerInterface bot : bots)
             {
+                if (gameState.getXMoves().size() == 18 && gameState.getOMoves().size() == 18)
+                {
+                    System.out.println("No more moves! No winner.");
+                    running = false;
+                    break;
+                }
+
                 final Move move = bot.makeMove(gameState);
                 gameState.updateGame(move);
 
@@ -52,6 +59,11 @@ public class BotTest
         {
             for (final PlayerInterface bot : bots)
             {
+                if (gameState.getXMoves().size() == 18 && gameState.getOMoves().size() == 18)
+                {
+                    System.out.println("No more moves! No winner.");
+                    running = false;
+                }
                 final Move move = bot.makeMove(gameState);
                 gameState.updateGame(move);
 

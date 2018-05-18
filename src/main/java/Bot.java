@@ -1,3 +1,4 @@
+import org.apache.commons.lang.ArrayUtils;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -6,11 +7,19 @@ public class Bot implements PlayerInterface
     private final char iPebble;
     private final String iName;
     private boolean iFoundSmartMove;
+    private static int[] iColumnToRandomFrom;
 
     public Bot(final char pebble)
     {
         iPebble = pebble;
         iName = "Bot";
+        iColumnToRandomFrom = new int[6];
+        iColumnToRandomFrom[0] = 0;
+        iColumnToRandomFrom[1] = 1;
+        iColumnToRandomFrom[2] = 2;
+        iColumnToRandomFrom[3] = 3;
+        iColumnToRandomFrom[4] = 4;
+        iColumnToRandomFrom[5] = 5;
     }
 
     /**
@@ -53,7 +62,8 @@ public class Bot implements PlayerInterface
             if (counter == board.getBoardWidth())
             {
                 System.out.println("That column is full");
-                column = new Random().nextInt(6);
+                iColumnToRandomFrom = ArrayUtils.removeElement(iColumnToRandomFrom, column);
+                column = iColumnToRandomFrom[(new Random().nextInt(iColumnToRandomFrom.length))];
                 System.out.println(column);
                 running = true;
             }
@@ -293,7 +303,7 @@ public class Bot implements PlayerInterface
         final boolean thirdMoveOnTop = thirdMoveRow == 0;
 
         final boolean thirdMoveBottom = thirdMoveRow == 5;
-        final boolean thirdMoveInBottomRightCorner = thirdMoveColumn == 5 && thirdMoveRow == 5;
+        final boolean thirdMoveOnEdge = thirdMoveColumn == 5;
         final boolean firstMoveInBottomRightCorner = firstMoveColumn == 5 && firstMoveRow == 5;
 
         if (!firstMoveOnTop && !firstMoveOnEdge)
@@ -312,14 +322,14 @@ public class Bot implements PlayerInterface
                 }
             }
         }
-        else if (!firstMoveInBottomRightCorner)
+        else if (!firstMoveOnEdge)
         {
             if (boardLayout[firstMoveRow + 1][firstMoveColumn + 1] == '.')
             {
                 column = firstMoveColumn + 1;
                 iFoundSmartMove = true;
             }
-            else if (!thirdMoveInBottomRightCorner && !thirdMoveBottom)
+            else if (!thirdMoveOnEdge && !thirdMoveBottom)
             {
                 if (boardLayout[thirdMoveRow + 1][thirdMoveColumn + 1] == '.')
                 {
